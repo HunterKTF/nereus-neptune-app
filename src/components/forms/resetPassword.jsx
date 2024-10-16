@@ -18,18 +18,14 @@ import {
 import { ChevronRight } from "lucide-react";
 
 const formSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
+  new_password: z.string(),
+  confirm_password: z.string(),
 });
 
-export default function RegisterForm() {
+export default function ResetForm() {
   // Define my form
   const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-    },
+    resolver: zodResolver(formSchema)
   });
   
   // Define submit handler
@@ -40,20 +36,20 @@ export default function RegisterForm() {
   return (
     <div className={"w-full h-full flex flex-col justify-center items-center gap-11"}>
       <div className={"w-full flex flex-col items-center justify-center"}>
-        <h2 className={"text-3xl"}>Create an Account</h2>
-        <p>Enter your data below to create your account</p>
+        <h2 className={"text-3xl"}>Recover your password</h2>
+        <p>Please enter your new password</p>
       </div>
       <div className={"w-80 flex flex-col gap-4"}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-3"}>
             <FormField
               control={form.control}
-              name="name"
+              name="new_password"
               render={({field}) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>New Password</FormLabel>
                   <FormControl>
-                    <Input placeholder={"John Doe"} {...field} />
+                    <Input placeholder={"new_password1@"} {...field} />
                   </FormControl>
                   <FormMessage/>
                 </FormItem>
@@ -61,25 +57,12 @@ export default function RegisterForm() {
             />
             <FormField
               control={form.control}
-              name="email"
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder={"john_doe@email.com"} {...field} />
-                  </FormControl>
-                  <FormMessage/>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
+              name="confirm_password"
               render={({field}) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder={"secure_password1@"} {...field} />
+                    <Input placeholder={"confirm_password1@"} {...field} />
                   </FormControl>
                   <FormMessage/>
                 </FormItem>
@@ -88,7 +71,7 @@ export default function RegisterForm() {
             <Button type={"submit"}
                     className={"w-full flex gap-1 bg-white text-black border border-white " +
                       "hover:bg-black hover:text-white hover:animate-out hover:duration-300"}>
-              Submit <ChevronRight size={18}/>
+              Update <ChevronRight size={18}/>
             </Button>
           </form>
         </Form>
