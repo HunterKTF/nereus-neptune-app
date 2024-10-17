@@ -99,7 +99,7 @@ export default function ProfileForm() {
             <Button type={"submit"}
                     className={"flex gap-1 bg-white text-black border border-white " +
                       "hover:bg-black hover:text-white hover:animate-out hover:duration-200"}>
-              Update Profile
+              Update profile
             </Button>
           </form>
         </Form>
