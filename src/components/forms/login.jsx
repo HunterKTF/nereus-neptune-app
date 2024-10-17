@@ -73,7 +73,7 @@ export default function LoginForm() {
             />
             <Button type={"submit"}
                     className={"w-full flex gap-1 bg-white text-black border border-white " +
-                      "hover:bg-black hover:text-white hover:animate-out hover:duration-300"}>
+                      "hover:bg-black hover:text-white hover:animate-out hover:duration-200"}>
               Submit <ChevronRight size={18} />
             </Button>
           </form>
@@ -83,7 +83,8 @@ export default function LoginForm() {
             <Checkbox className={"border-white bg-black"} id="remember-me" />
             <label
               htmlFor="remember-me"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed
+              peer-disabled:opacity-70"
             >
               Remember me
             </label>

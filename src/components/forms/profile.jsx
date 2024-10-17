@@ -1,9 +1,10 @@
-"use client"
+'use client'
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,10 +13,9 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormDescription,
   FormMessage,
 } from "@/components/ui/form";
-
-import { ChevronRight } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string(),
@@ -23,7 +23,7 @@ const formSchema = z.object({
   password: z.string(),
 });
 
-export default function RegisterForm() {
+export default function ProfileForm() {
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -38,12 +38,13 @@ export default function RegisterForm() {
   }
   
   return (
-    <div className={"w-full h-full flex flex-col justify-center items-center gap-11"}>
-      <div className={"w-full flex flex-col items-center justify-center"}>
-        <h2 className={"text-3xl"}>Create an Account</h2>
-        <p>Enter your data below to create your account</p>
+    <div className={"w-full flex flex-col items-center justify-center gap-6"}>
+      <div className={"w-[550px]"}>
+        <h4 className={"text-2xl"}>Profile</h4>
+        <p className={"text-sm"}>This is how others will see you on the site</p>
       </div>
-      <div className={"w-80 flex flex-col gap-4"}>
+      <Separator className={"w-[550px]"} />
+      <div className={"w-[550px] flex flex-col gap-5"}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-3"}>
             <FormField
@@ -55,6 +56,10 @@ export default function RegisterForm() {
                   <FormControl>
                     <Input placeholder={"John Doe"} {...field} />
                   </FormControl>
+                  <FormDescription>
+                    This is your public display name. It can be your real name or a pseudonym.
+                    You can only change this once every 30 days.
+                  </FormDescription>
                   <FormMessage/>
                 </FormItem>
               )}
@@ -68,6 +73,9 @@ export default function RegisterForm() {
                   <FormControl>
                     <Input placeholder={"john_doe@email.com"} {...field} />
                   </FormControl>
+                  <FormDescription>
+                    You can manage verified email addresses in your email settings.
+                  </FormDescription>
                   <FormMessage/>
                 </FormItem>
               )}
@@ -81,18 +89,21 @@ export default function RegisterForm() {
                   <FormControl>
                     <Input placeholder={"secure_password1@"} {...field} />
                   </FormControl>
+                  <FormDescription>
+                    Change your current password here.
+                  </FormDescription>
                   <FormMessage/>
                 </FormItem>
               )}
             />
             <Button type={"submit"}
-                    className={"w-full flex gap-1 bg-white text-black border border-white " +
+                    className={"flex gap-1 bg-white text-black border border-white " +
                       "hover:bg-black hover:text-white hover:animate-out hover:duration-200"}>
-              Submit <ChevronRight size={18}/>
+              Update Profile
             </Button>
           </form>
         </Form>
       </div>
     </div>
-  );
+  )
 }

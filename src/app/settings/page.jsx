@@ -1,7 +1,11 @@
+import Navbar from "@/components/app/navbar";
+import SettingsPanel from "@/components/app/settings-panel";
+
 export default function Settings() {
   return (
-    <main className={""}>
-      <h1>Settings</h1>
+    <main className={"w-screen h-screen flex flex-col bg-background"}>
+      <Navbar />
+      <SettingsPanel />
     </main>
   )
 }
