@@ -69,8 +69,7 @@ export default function ResetForm() {
               )}
             />
             <Button type={"submit"}
-                    className={"w-full flex gap-1 bg-white text-black border border-white " +
-                      "hover:bg-black hover:text-white hover:animate-out hover:duration-300"}>
+                    className={"w-full flex gap-1"}>
               Update <ChevronRight size={18}/>
             </Button>
           </form>

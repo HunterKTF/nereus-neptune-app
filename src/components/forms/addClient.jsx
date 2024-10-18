@@ -13,26 +13,41 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function ForgotPassword() {
+import { FaPlus } from "react-icons/fa6";
+
+export default function AddClient() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="text">Forgot Password</Button>
+        <Button>
+          Add Client <FaPlus />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-background border border-transparent">
         <DialogHeader>
-          <DialogTitle>Retrieve Password</DialogTitle>
+          <DialogTitle>Add New Client</DialogTitle>
           <DialogDescription>
-            Please enter the email you used to register. We will send you an email
-            with the instructions to reset your password.
+            Please enter your client&apos;s data
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Client
+            </Label>
+            <Input id="name" placeholder={"John Doe"} className="col-span-3"/>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="company" className="text-right">
+              Company
+            </Label>
+            <Input id="company" placeholder={"Company Co."} className="col-span-3"/>
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="email" className="text-right">
               Email
             </Label>
-            <Input id="email" placeholder={"your_email@email.com"} className="col-span-3" />
+            <Input id="email" placeholder={"client_email@email.com"} className="col-span-3"/>
           </div>
         </div>
         <DialogFooter>

@@ -62,7 +62,7 @@ export default function NotificationsForm() {
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem className={"border-white text-white"} value="all"/>
+                          <RadioGroupItem className={""} value="all"/>
                         </FormControl>
                         <FormLabel className="font-normal">
                           All new messages
@@ -70,7 +70,7 @@ export default function NotificationsForm() {
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem className={"border-white text-white"} value="mentions"/>
+                          <RadioGroupItem className={""} value="mentions"/>
                         </FormControl>
                         <FormLabel className="font-normal">
                           Direct messages and mentions
@@ -78,7 +78,7 @@ export default function NotificationsForm() {
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem className={"border-white text-white"} value="none"/>
+                          <RadioGroupItem className={""} value="none"/>
                         </FormControl>
                         <FormLabel className="font-normal">Nothing</FormLabel>
                       </FormItem>
@@ -104,7 +104,7 @@ export default function NotificationsForm() {
                       </div>
                       <FormControl>
                         <Switch
-                          className={"dark"}
+                          className={""}
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
@@ -125,7 +125,7 @@ export default function NotificationsForm() {
                       </div>
                       <FormControl>
                         <Switch
-                          className={"dark"}
+                          className={""}
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
@@ -146,7 +146,7 @@ export default function NotificationsForm() {
                       </div>
                       <FormControl>
                         <Switch
-                          className={"dark"}
+                          className={""}
                           checked={field.value}
                           onCheckedChange={field.onChange}
                         />
@@ -157,8 +157,7 @@ export default function NotificationsForm() {
               </div>
             </div>
             <Button type={"submit"}
-                    className={"flex gap-1 bg-white text-black border border-white " +
-                      "hover:bg-black hover:text-white hover:animate-out hover:duration-200"}>
+                    className={"flex gap-1"}>
               Update notifications
             </Button>
           </form>

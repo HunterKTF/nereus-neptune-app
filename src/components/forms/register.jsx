@@ -86,8 +86,7 @@ export default function RegisterForm() {
               )}
             />
             <Button type={"submit"}
-                    className={"w-full flex gap-1 bg-white text-black border border-white " +
-                      "hover:bg-black hover:text-white hover:animate-out hover:duration-200"}>
+                    className={"w-full flex gap-1"}>
               Submit <ChevronRight size={18}/>
             </Button>
           </form>

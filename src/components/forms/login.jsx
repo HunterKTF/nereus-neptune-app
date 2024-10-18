@@ -72,15 +72,14 @@ export default function LoginForm() {
               )}
             />
             <Button type={"submit"}
-                    className={"w-full flex gap-1 bg-white text-black border border-white " +
-                      "hover:bg-black hover:text-white hover:animate-out hover:duration-200"}>
+                    className={"w-full flex gap-1"}>
               Submit <ChevronRight size={18} />
             </Button>
           </form>
         </Form>
         <div className={"w-full flex justify-between"}>
           <div className={"flex gap-2 items-center justify-center"}>
-            <Checkbox className={"border-white bg-black"} id="remember-me" />
+            <Checkbox className={""} id="remember-me" />
             <label
               htmlFor="remember-me"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed

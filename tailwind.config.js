@@ -9,8 +9,8 @@ module.exports = {
   theme: {
   	extend: {
   		colors: {
-  			background: '#0A0A0A',
-  			foreground: '#262626',
+  			background: '#FEFEFE',
+  			foreground: '#E0E0E0',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
