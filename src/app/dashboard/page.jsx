@@ -1,11 +1,11 @@
 import Navbar from "@/components/app/navbar";
-import ClientsPanel from "@/components/app/clients-panel";
+import DashboardPanel from "@/components/app/dashboard-panel";
 
-export default function Clients () {
+export default function Dashboard() {
   return (
     <main className={"w-screen h-screen flex flex-col"}>
       <Navbar />
-      <ClientsPanel />
+      <DashboardPanel />
     </main>
   )
 }
