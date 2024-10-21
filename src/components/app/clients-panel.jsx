@@ -62,7 +62,7 @@ export default function ClientsPanel() {
           {active === "table" ? <AddClient /> : <ClientSelector data={data} />}
         </div>
       </div>
-      <div className="w-full pt-5">
+      <div className="w-full pt-5 ">
         {active === "table" && <DataTable columns={columns} data={data}/>}
         {active === "upload" && <UploadForm />}
         {active === "edit" && <EditForm />}
