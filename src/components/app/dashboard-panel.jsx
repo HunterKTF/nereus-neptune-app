@@ -9,7 +9,11 @@ import { data } from "@/lib/dummyData";
 import DateRangePicker from "@/components/forms/dateRange";
 import {Button} from "@/components/ui/button";
 import ClientSelector from "@/components/app/client-selector";
+
 import Overview from "@/components/app/overview";
+import Analytics from "@/components/app/analytics";
+import Reports from "@/components/app/reports";
+import Insights from "@/components/app/insights";
 
 export default function DashboardPanel() {
   const [active, setActive] = useState("overview");
@@ -75,7 +79,10 @@ export default function DashboardPanel() {
         <ClientSelector data={data} />
       </div>
       <div className={"pt-4 h-[85%]"}>
-        <Overview />
+        {active === "overview" && <Overview />}
+        {active === "analytics" && <Analytics />}
+        {active === "reports" && <Reports />}
+        {active === "insights" && <Insights />}
       </div>
     </div>
   )
