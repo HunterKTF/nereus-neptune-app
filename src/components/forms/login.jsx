@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -26,6 +28,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -71,10 +74,14 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type={"submit"}
-                    className={"w-full flex gap-1"}>
-              Submit <ChevronRight size={18} />
-            </Button>
+            
+              <Button type={"submit"}
+                      className={"w-full flex gap-1"}>
+                <Link href={"/settings"} className={"flex w-full h-full justify-center items-center gap-1"}>
+                  Submit <ChevronRight size={18} />
+                </Link>
+              </Button>
+            
           </form>
         </Form>
         <div className={"w-full flex justify-between"}>

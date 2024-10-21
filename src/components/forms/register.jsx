@@ -1,5 +1,7 @@
 "use client"
 
+import { useToast} from "@/hooks/use-toast";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -24,6 +26,8 @@ const formSchema = z.object({
 });
 
 export default function RegisterForm() {
+  const { toast } = useToast();
+  
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -86,7 +90,13 @@ export default function RegisterForm() {
               )}
             />
             <Button type={"submit"}
-                    className={"w-full flex gap-1"}>
+                    className={"w-full flex gap-1"}
+                    onClick={() => {
+                      toast({
+                        title: "Successfully Registered",
+                        description: "User created, you can now login with your credentials",
+                      })
+                    }}>
               Submit <ChevronRight size={18}/>
             </Button>
           </form>

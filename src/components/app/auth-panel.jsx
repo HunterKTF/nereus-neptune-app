@@ -8,8 +8,6 @@ import LoginForm from "@/components/forms/login";
 export default function AuthForm() {
   const [active, setActive] = useState("RegisterCard");
   
-  
-  
   return (
     <div className={"w-full h-full flex flex-col justify-between p-11"}>
       <div className={"w-full flex justify-end gap-4"}>

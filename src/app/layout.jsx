@@ -5,11 +5,16 @@ export const metadata = {
   description: "Nereus AI cloud app for data visualization",
 };
 
+import { Toaster } from "@/components/ui/toaster";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
+        <main>
+          {children}
+        </main>
+        <Toaster />
       </body>
     </html>
   );
