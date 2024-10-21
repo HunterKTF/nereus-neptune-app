@@ -22,7 +22,9 @@ export default function OverviewChart () {
     <div className={"rounded-xl"}>
       <div className={"p-4 flex justify-between"}>
         <h3 className={"text-lg"}>Overview</h3>
-        <KpiSelector data={KpiSelect} />
+        <div className={"w-[200px]"}>
+          <KpiSelector data={KpiSelect} />
+        </div>
       </div>
       <ChartContainer config={chartConfig} className="py-2 pr-5 h-full w-full">
         <BarChart accessibilityLayer data={chartData}>

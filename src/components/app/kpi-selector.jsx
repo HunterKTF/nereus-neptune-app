@@ -13,7 +13,7 @@ import {
 export default function KpiSelector({data}) {
   return (
     <Select>
-      <SelectTrigger className={"w-[200px]"}>
+      <SelectTrigger className={"w-full"}>
         <SelectValue placeholder={"Select a KPI"} />
       </SelectTrigger>
       <SelectContent>
