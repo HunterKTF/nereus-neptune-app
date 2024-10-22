@@ -7,7 +7,7 @@ import { FaCaretDown } from "react-icons/fa";
 
 export default function Cards({data}) {
   return (
-    <div className={"w-full h-full p-4 flex flex-col justify-between border border-black rounded-xl"}>
+    <div className={"w-full h-full p-4 flex flex-col justify-between border border-black rounded-xl gap-3"}>
       <div className={"flex justify-between items-center"}>
         <KpiSelector data={KpiSelect} />
       </div>

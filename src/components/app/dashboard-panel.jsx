@@ -19,8 +19,8 @@ export default function DashboardPanel() {
   const [active, setActive] = useState("overview");
   
   return (
-    <div className={"h-full p-8"}>
-      <div className={"flex justify-between h-auto"}>
+    <div className={"h-full p-8 flex flex-col"}>
+      <div className={"flex justify-between"}>
         <h3 className={"text-3xl py-3"}>Dashboard</h3>
         <div className={"flex gap-3"}>
           <DateRangePicker/>
@@ -78,7 +78,7 @@ export default function DashboardPanel() {
         </div>
         <ClientSelector data={data} />
       </div>
-      <div className={"pt-4 h-[85%]"}>
+      <div className={"pt-4"}>
         {active === "overview" && <Overview />}
         {active === "analytics" && <Analytics />}
         {active === "reports" && <Reports />}

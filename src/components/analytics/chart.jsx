@@ -26,7 +26,7 @@ export default function OverviewChart () {
           <KpiSelector data={KpiSelect} />
         </div>
       </div>
-      <ChartContainer config={chartConfig} className="py-2 pr-5 h-full w-full">
+      <ChartContainer config={chartConfig} className="py-2 pr-5 w-full min-h-[472px] max-h-[512px]">
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis
