@@ -41,8 +41,8 @@ export default function NotificationsForm() {
   return (
     <div className={"w-full flex flex-col items-center justify-center gap-6"}>
       <div className={"w-[550px]"}>
-        <h4 className={"text-2xl"}>Account</h4>
-        <p className={"text-sm"}>Update your account settings. Set your preferred language and timezone.</p>
+        <h4 className={"text-2xl"}>Notifications</h4>
+        <p className={"text-sm"}>Configure how you receive notifications.</p>
       </div>
       <Separator className={"w-[550px]"}/>
       <div className={"w-[550px] flex flex-col gap-5"}>

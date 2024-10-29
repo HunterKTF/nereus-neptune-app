@@ -18,16 +18,12 @@ export async function login(currentState, formData) {
   // Send auth login request
   const { error } = await supabase.auth.signInWithPassword(data);
   
-  if (data.email === "john_doe@email.com") {
-    redirect('/settings');
-  }
-  else if (error) {
+  if (error) {
     console.log(error.message);
     return { message: error.message, status: 400 };
   }
   else {
     redirect('/settings');
-    return { message: "Successfully logged in", status: 200 };
   }
 }
 
@@ -38,9 +34,13 @@ export async function register(currentState, formData) {
   
   // Parse data from RegisterForm
   const data = {
-    name: formData.name ?? "",
     email: formData.email,
     password: formData.password,
+    options: {
+      data: {
+        name: formData.name ?? "",
+      }
+    }
   }
   
   const { error } = await supabase.auth.signUp(data);
