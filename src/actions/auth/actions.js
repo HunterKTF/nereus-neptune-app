@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/utils/supabase/server';
 
+
 /* Login form action to log user into app or return error message */
 export async function login(currentState, formData) {
   // Create supabase client
@@ -27,6 +28,7 @@ export async function login(currentState, formData) {
   }
 }
 
+
 /* Register function for new users */
 export async function register(currentState, formData) {
   // Create supabase client
@@ -39,6 +41,13 @@ export async function register(currentState, formData) {
     options: {
       data: {
         name: formData.name ?? "",
+        username: formData.name ?? "",
+        notify: "all",
+        toggle: {
+          marketing: false,
+          security: true,
+          social: false,
+        }
       }
     }
   }
@@ -48,6 +57,14 @@ export async function register(currentState, formData) {
   if (error) {
     return { message: error.message, status: 400 };
   } else {
-    return { message: "Successfully logged in", status: 200 };
+    return { message: "Successfully registered user", status: 200 };
   }
+}
+
+
+/* Update user information */
+export async function update(currentState, formData) {
+  const supabase = await createClient();
+  
+  const data = {}
 }

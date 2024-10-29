@@ -1,5 +1,5 @@
-import Navbar from "@/app/components/app/navbar";
-import ClientsPanel from "@/app/components/app/panels/clients-panel";
+import Navbar from "@/components/app/navbar";
+import ClientsPanel from "@/components/app/panels/clients-panel";
 
 export default function Clients () {
   return (

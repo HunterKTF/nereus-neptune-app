@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { CheckIcon } from "@radix-ui/react-icons";
 
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/app/components/ui/card";
+} from "@/components/ui/card";
 
 const notifications = [
   {

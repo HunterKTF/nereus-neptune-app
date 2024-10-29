@@ -1,5 +1,5 @@
-import AuthDecorator from "@/app/components/app/auth-decor";
-import AuthPanel from "@/app/components/app/panels/auth-panel";
+import AuthDecorator from "@/components/app/auth-decor";
+import AuthPanel from "@/components/app/panels/auth-panel";
 
 export default function Auth() {
   return (

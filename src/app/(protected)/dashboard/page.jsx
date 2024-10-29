@@ -1,5 +1,5 @@
-import Navbar from "@/app/components/app/navbar";
-import DashboardPanel from "@/app/components/app/panels/dashboard-panel";
+import Navbar from "@/components/app/navbar";
+import DashboardPanel from "@/components/app/panels/dashboard-panel";
 
 export default function Dashboard() {
   return (

@@ -1,5 +1,5 @@
-import AuthDecorator from "@/app/components/app/auth-decor";
-import RecoverPanel from "@/app/components/app/panels/recover-panel";
+import AuthDecorator from "@/components/app/auth-decor";
+import RecoverPanel from "@/components/app/panels/recover-panel";
 
 export default function RecoverPage() {
   return (
