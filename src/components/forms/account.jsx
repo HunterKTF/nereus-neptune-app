@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { updateAccount, deleteAccount } from "@/actions/auth/actions";
+import { useFormState } from "react-dom";
+
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -36,26 +39,19 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const formSchema = z.object({
-  name: z.string(),
-  dob: z.date({
-    required_error: "A date of birth is required.",
-  }),
-  language: z.string(),
+  name: z.string().optional(),
+  language: z.string().optional(),
 });
 
-export default function AccountForm() {
+export default function AccountForm({ u_username, u_id }) {
+  const initialState = {};
+  const [formState, formAction] = useFormState(updateAccount, initialState);
+  const [formStateDelete, formActionDelete] = useFormState(deleteAccount, initialState);
+  
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-    },
   });
-
-  // Define submit handler
-  function onSubmit(values) {
-    console.log(values);
-  }
 
   return (
     <div className={"w-full flex flex-col items-center justify-center gap-6"}>
@@ -66,15 +62,15 @@ export default function AccountForm() {
       <Separator className={"w-[550px]"}/>
       <div className={"w-[550px] flex flex-col gap-5"}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-3"}>
+          <form onSubmit={form.handleSubmit(formAction)} className={"space-y-3"}>
             <FormField
               control={form.control}
-              name="name"
+              name="username"
               render={({field}) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder={"John Doe"} {...field} />
+                    <Input placeholder={u_username} {...field} />
                   </FormControl>
                   <FormDescription>
                     This is the name that will be displayed on your profile and in emails.
@@ -85,7 +81,7 @@ export default function AccountForm() {
             />
             <FormField
               control={form.control}
-              name="email"
+              name="language"
               render={({field}) => (
                 <FormItem>
                   <FormLabel>Language</FormLabel>
@@ -101,7 +97,7 @@ export default function AccountForm() {
                     </SelectContent>
                   </Select>
                   <FormDescription>
-                    You can select the application language as preferred
+                    This feature is work-in-progress.
                   </FormDescription>
                   <FormMessage/>
                 </FormItem>
@@ -121,8 +117,8 @@ export default function AccountForm() {
       </div>
       <div className={"w-[550px] flex flex-col gap-5"}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-3"}>
-            <input hidden id={"userId"} name={"userId"} />
+          <form onSubmit={form.handleSubmit(formActionDelete)} className={"space-y-3"}>
+            <input hidden id={"userId"} name={"userId"} value={u_id} disabled={true} />
             <AlertDialog>
               <AlertDialogTrigger className={"bg-red-600 text-white px-4 py-1.5 rounded-md"}>
                 Delete User

@@ -16,7 +16,7 @@ export default async function Settings() {
   return (
     <main className={"w-screen h-screen flex flex-col"}>
       <Navbar />
-      <SettingsPanel {...data.user.user_metadata} />
+      <SettingsPanel props={data.user.user_metadata} />
     </main>
   )
 }

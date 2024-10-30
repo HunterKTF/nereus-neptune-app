@@ -8,8 +8,10 @@ import ProfileForm from "@/components/forms/profile";
 import AccountForm from "@/components/forms/account";
 import NotificationsForm from "@/components/forms/notifications";
 
-export default function SettingsPanel(props) {
+export default function SettingsPanel({ props }) {
   const [active, setActive] = useState("profile");
+  
+  // console.log(props.sub);
   
   return (
     <div className={"p-8"}>
@@ -44,9 +46,9 @@ export default function SettingsPanel(props) {
         )}
       </div>
       <div className={"flex flex-col p-5"}>
-        {active === "profile" && <ProfileForm />}
-        {active === "account" && <AccountForm />}
-        {active === "notifications" && <NotificationsForm />}
+        {active === "profile" && <ProfileForm u_name={props.name} u_email={props.email} />}
+        {active === "account" && <AccountForm u_username={props.username} u_id={props.sub} />}
+        {active === "notifications" && <NotificationsForm notify={props.notify} toggle={props.toggle} />}
       </div>
     </div>
   )

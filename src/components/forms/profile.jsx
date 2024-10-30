@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { updateProfile } from "@/actions/auth/actions";
+import { useFormState } from "react-dom";
+
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -18,24 +21,19 @@ import {
 } from "@/components/ui/form";
 
 const formSchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
+  name: z.string().optional(),
+  email: z.string().email().optional(),
+  password: z.string().optional(),
 });
 
-export default function ProfileForm() {
+export default function ProfileForm({ u_name, u_email }) {
+  const initialState = {};
+  const [formState, formAction] = useFormState(updateProfile, initialState);
+  
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-    },
   });
-  
-  // Define submit handler
-  function onSubmit(values) {
-    console.log(values);
-  }
   
   return (
     <div className={"w-full flex flex-col items-center justify-center gap-6"}>
@@ -46,7 +44,7 @@ export default function ProfileForm() {
       <Separator className={"w-[550px]"} />
       <div className={"w-[550px] flex flex-col gap-5"}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-3"}>
+          <form onSubmit={form.handleSubmit(formAction)} className={"space-y-3"}>
             <FormField
               control={form.control}
               name="name"
@@ -54,7 +52,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder={"John Doe"} {...field} />
+                    <Input {...field} placeholder={u_name} type={"text"} />
                   </FormControl>
                   <FormDescription>
                     This is your public display name. It can be your real name or a pseudonym.
@@ -71,7 +69,7 @@ export default function ProfileForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder={"john_doe@email.com"} {...field} />
+                    <Input placeholder={u_email} {...field} />
                   </FormControl>
                   <FormDescription>
                     You can manage verified email addresses in your email settings.
@@ -85,9 +83,9 @@ export default function ProfileForm() {
               name="password"
               render={({field}) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>New Password</FormLabel>
                   <FormControl>
-                    <Input placeholder={"secure_password1@"} {...field} />
+                    <Input placeholder={"Enter new password here..."} {...field} />
                   </FormControl>
                   <FormDescription>
                     Change your current password here.

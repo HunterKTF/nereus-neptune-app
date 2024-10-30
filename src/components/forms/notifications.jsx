@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { updateNotifications} from "@/actions/auth/actions";
+import { useFormState } from "react-dom";
+
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -22,21 +25,19 @@ const formSchema = z.object({
   type: z.enum(["all", "mentions", "none"], {
     required_error: "You need to select a notification type.",
   }),
-  communication_emails: z.boolean(),
-  marketing_emails: z.boolean(),
-  social_emails: z.boolean(),
+  communication_emails: z.boolean().optional(),
+  marketing_emails: z.boolean().optional(),
+  social_emails: z.boolean().optional(),
 })
 
-export default function NotificationsForm() {
+export default function NotificationsForm({ notify, toggle }) {
+  const initialState = {};
+  const [formState, formAction] = useFormState(updateNotifications, initialState);
+  
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
-  
-  // Define submit handler
-  function onSubmit(values) {
-    console.log(values);
-  }
   
   return (
     <div className={"w-full flex flex-col items-center justify-center gap-6"}>
@@ -47,7 +48,7 @@ export default function NotificationsForm() {
       <Separator className={"w-[550px]"}/>
       <div className={"w-[550px] flex flex-col gap-5"}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+          <form onSubmit={form.handleSubmit(formAction)} className="w-2/3 space-y-6">
             <FormField
               control={form.control}
               name="type"
@@ -57,12 +58,12 @@ export default function NotificationsForm() {
                   <FormControl>
                     <RadioGroup
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={notify}
                       className="flex flex-col space-y-1"
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem className={""} value="all"/>
+                          <RadioGroupItem id={"all"} className={""} value="all"/>
                         </FormControl>
                         <FormLabel className="font-normal">
                           All new messages
@@ -70,7 +71,7 @@ export default function NotificationsForm() {
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem className={""} value="mentions"/>
+                          <RadioGroupItem id={"mentions"} className={""} value="mentions"/>
                         </FormControl>
                         <FormLabel className="font-normal">
                           Direct messages and mentions
@@ -78,7 +79,7 @@ export default function NotificationsForm() {
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem className={""} value="none"/>
+                          <RadioGroupItem id={"none"} className={""} value="none"/>
                         </FormControl>
                         <FormLabel className="font-normal">Nothing</FormLabel>
                       </FormItem>
@@ -105,7 +106,7 @@ export default function NotificationsForm() {
                       <FormControl>
                         <Switch
                           className={""}
-                          checked={field.value}
+                          checked={toggle.marketing}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
@@ -126,7 +127,7 @@ export default function NotificationsForm() {
                       <FormControl>
                         <Switch
                           className={""}
-                          checked={field.value}
+                          checked={toggle.security}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
@@ -147,7 +148,7 @@ export default function NotificationsForm() {
                       <FormControl>
                         <Switch
                           className={""}
-                          checked={field.value}
+                          checked={toggle.social}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
