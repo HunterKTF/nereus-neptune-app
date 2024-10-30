@@ -122,6 +122,7 @@ export default function AccountForm() {
       <div className={"w-[550px] flex flex-col gap-5"}>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-3"}>
+            <input hidden id={"userId"} name={"userId"} />
             <AlertDialog>
               <AlertDialogTrigger className={"bg-red-600 text-white px-4 py-1.5 rounded-md"}>
                 Delete User

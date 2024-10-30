@@ -93,7 +93,7 @@ export default function NotificationsForm() {
               <div className="space-y-4">
                 <FormField
                   control={form.control}
-                  name="communication_emails"
+                  name="marketing"
                   render={({field}) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">
@@ -114,7 +114,7 @@ export default function NotificationsForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="security_emails"
+                  name="security"
                   render={({field}) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">
@@ -135,7 +135,7 @@ export default function NotificationsForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="social_emails"
+                  name="social"
                   render={({field}) => (
                     <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                       <div className="space-y-0.5">

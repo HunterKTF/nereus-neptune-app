@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/utils/supabase/server';
+import { createAdminClient } from "@/utils/supabase/admin";
 
 
 /* Login form action to log user into app or return error message */
@@ -63,8 +64,82 @@ export async function register(currentState, formData) {
 
 
 /* Update user information */
-export async function update(currentState, formData) {
+export async function updateProfile(currentState, formData) {
   const supabase = await createClient();
   
-  const data = {}
+  const update_data = {}
+  
+  if (formData?.name){
+    update_data['data']['name'] = formData.name;
+  }
+  if (formData?.email){
+    update_data.email = formData.email;
+  }
+  if (formData?.password){
+    update_data.password = formData.password;
+  }
+  
+  const { error } = await supabase.auth.updateUser(update_data);
+  
+  if (error) {
+    return { message: error.message, status: 400 };
+  } else {
+    return { message: "Successfully updated user", status: 200 };
+  }
+}
+
+/* Update user account settings */
+export async function updateAccount(currentState, formData) {
+  const supabase = await createClient();
+  
+  const update_data = {
+    data: {}
+  }
+  if (formData?.username){ update_data.data['username'] = formData.username }
+  if (formData?.language){ update_data.data['language'] = formData.language }
+  
+  const { error } = await supabase.auth.updateUser(update_data);
+  
+  if (error) {
+    return { message: error.message, status: 400 };
+  } else {
+    return { message: "Successfully updated user", status: 200 };
+  }
+}
+
+/* Update user notification settings */
+export async function updateNotifications(currentState, formData) {
+  const supabase = await createClient();
+  
+  const update_data = { data: {} };
+  
+  if (formData?.type) { update_data.data['notify'] = formData.type }
+  if (formData?.marketing) { update_data.data['toggle']['marketing'] = formData.type }
+  if (formData?.security) { update_data.data['toggle']['security'] = true }
+  if (formData?.social) { update_data.data['toggle']['social'] = formData.social_emails }
+  
+  const { error } = await supabase.auth.updateUser(update_data);
+  
+  if (error) {
+    return { message: error.message, status: 400 };
+  } else {
+    return { message: "Successfully updated user", status: 200 };
+  }
+}
+
+/* Delete user account */
+export async function deleteAccount(currentState, formData) {
+  const supabase = await createAdminClient();
+  
+  const userId = formData.userId;
+  
+  const { error } = await supabase.auth.admin.deleteUser(
+    userId
+  )
+  
+  if (error) {
+    return { message: error.message, status: 400 };
+  } else {
+    return { message: "Successfully deleted user", status: 200 };
+  }
 }
