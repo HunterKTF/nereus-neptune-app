@@ -1,5 +1,8 @@
 'use client'
 
+import { uploadData } from "@/actions/clients/actions";
+import { useFormState } from "react-dom";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,23 +19,31 @@ import {
   FormDescription,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
+  select: z.string(),
   contpaqi: z.any().refine((file) => file?.length !== 0, "File is required"),
-  aspel: z.any().refine((file) => file?.length !== 0, "File is required"),
-  other: z.any().refine((file) => file?.length !== 0, "File is required"),
+  aspel: z.any().refine((file) => file?.length !== 0, "File is required").optional(),
+  other: z.any().refine((file) => file?.length !== 0, "File is required").optional(),
 });
 
-export default function UploadForm() {
+export default function UploadForm({ tableData }) {
+  const initialState = {};
+  const [formState, formAction] = useFormState(uploadData, initialState);
+  
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
-  
-  // Define submit handler
-  function onSubmit(values) {
-    console.log(values);
-  }
   
   return (
     <div className={"w-full flex flex-col items-center justify-center gap-6"}>
@@ -43,7 +54,37 @@ export default function UploadForm() {
       <Separator className={"w-[550px]"} />
       <div className={"w-[550px] flex flex-col gap-5"}>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-3"}>
+          <form onSubmit={form.handleSubmit(formAction)} className={"space-y-3"}>
+            <FormField
+              control={form.control}
+              name="select"
+              render={({field}) => (
+                <FormItem>
+                  <FormLabel>Select Company</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className={""}>
+                        <SelectValue placeholder={"Select a client"} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Clients</SelectLabel>
+                        {
+                          tableData.map((name) => {
+                            return <SelectItem key={name.id_number} value={name.client_id}>
+                              {name.company}
+                            </SelectItem>
+                          })
+                        }
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>Select the client of the attached file</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="contpaqi"
@@ -96,6 +137,9 @@ export default function UploadForm() {
                     className={"flex gap-1"}>
               Add file
             </Button>
+            {formState?.message && (
+              <p>{formState.message}</p>
+            )}
           </form>
         </Form>
       </div>

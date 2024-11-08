@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 // TODO: DUMMY DATA HERE
-import { data } from "@/lib/dummyData";
+// import { data } from "@/lib/dummyData";
 
 import { Button } from "@/components/ui/button";
 import {columns} from "@/app/(protected)/clients/columns";
@@ -13,11 +13,9 @@ import ClientSelector from "@/components/app/client-selector";
 import UploadForm from "@/components/forms/upload";
 import EditForm from "@/components/forms/editClient";
 
-// Clients main views here
-
-
-export default function ClientsPanel() {
+export default function ClientsPanel({ data }) {
   const [active, setActive] = useState("table");
+  const [formClient, setFormClient] = useState('');
   
   return (
     <div className={"p-8"}>
@@ -64,7 +62,7 @@ export default function ClientsPanel() {
       </div>
       <div className="w-full pt-5 ">
         {active === "table" && <DataTable columns={columns} data={data}/>}
-        {active === "upload" && <UploadForm />}
+        {active === "upload" && <UploadForm tableData={data} />}
         {active === "edit" && <EditForm />}
       </div>
     </div>

@@ -8,16 +8,20 @@ export async function addClient(currentState, formData) {
   const supabase = await createClient();
   
   const client_data = {
-    name: formData.name,
+    client: formData.client,
     company: formData.company,
     email: formData.email,
   }
   
+  console.log(client_data)
+  
   const { error } = await supabase.from('clients').insert(client_data);
   
   if (error) {
+    console.log(error)
     return { message: error.message, status: 400 };
   } else {
+    console.log('client added')
     return { message: "Successfully added client", status: 200 };
   }
 }
@@ -91,6 +95,7 @@ export async function deleteClient(formData) {
 
 /* Upload client data file */
 export async function uploadData(currentState, formData) {
+  console.log(formData.select);
   return { message: "Successfully uploaded file", status: 200 };
 }
 

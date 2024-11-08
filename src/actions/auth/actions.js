@@ -67,10 +67,16 @@ export async function register(currentState, formData) {
 export async function updateProfile(currentState, formData) {
   const supabase = await createClient();
   
-  const update_data = {}
+  const update_data = { data: {} };
   
   if (formData?.name){
-    update_data['data']['name'] = formData.name;
+    update_data.data.name = formData.name;
+  }
+  if (formData?.username) {
+    update_data.data.username = formData.username;
+  }
+  if (formData?.language) {
+    update_data.data.language = formData.language;
   }
   if (formData?.email){
     update_data.email = formData.email;
@@ -88,35 +94,20 @@ export async function updateProfile(currentState, formData) {
   }
 }
 
-/* Update user account settings */
-export async function updateAccount(currentState, formData) {
-  const supabase = await createClient();
-  
-  const update_data = {
-    data: {}
-  }
-  if (formData?.username){ update_data.data['username'] = formData.username }
-  if (formData?.language){ update_data.data['language'] = formData.language }
-  
-  const { error } = await supabase.auth.updateUser(update_data);
-  
-  if (error) {
-    return { message: error.message, status: 400 };
-  } else {
-    return { message: "Successfully updated user", status: 200 };
-  }
-}
-
 /* Update user notification settings */
 export async function updateNotifications(currentState, formData) {
   const supabase = await createClient();
   
-  const update_data = { data: {} };
+  const update_data = { data: { toggle: {} } };
+  
+  update_data.data['toggle']['marketing'] = false;
+  update_data.data['toggle']['security'] = false;
+  update_data.data['toggle']['social'] = false;
   
   if (formData?.type) { update_data.data['notify'] = formData.type }
-  if (formData?.marketing) { update_data.data['toggle']['marketing'] = formData.type }
-  if (formData?.security) { update_data.data['toggle']['security'] = true }
-  if (formData?.social) { update_data.data['toggle']['social'] = formData.social_emails }
+  if (formData?.marketing) { update_data.data['toggle']['marketing'] = formData.marketing }
+  if (formData?.security) { update_data.data['toggle']['security'] = formData.security }
+  if (formData?.social) { update_data.data['toggle']['social'] = formData.social }
   
   const { error } = await supabase.auth.updateUser(update_data);
   

@@ -22,12 +22,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {Separator} from "@/components/ui/separator";
 
 const formSchema = z.object({
-  type: z.enum(["all", "mentions", "none"], {
-    required_error: "You need to select a notification type.",
-  }),
-  communication_emails: z.boolean().optional(),
-  marketing_emails: z.boolean().optional(),
-  social_emails: z.boolean().optional(),
+  type: z.enum(["all", "mentions", "none"]).optional(),
+  marketing: z.boolean().optional(),
+  security: z.boolean().optional(),
+  social: z.boolean().optional(),
 })
 
 export default function NotificationsForm({ notify, toggle }) {
@@ -37,6 +35,11 @@ export default function NotificationsForm({ notify, toggle }) {
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      marketing: toggle.marketing,
+      security: toggle.security,
+      social: toggle.social,
+    }
   });
   
   return (
@@ -106,7 +109,7 @@ export default function NotificationsForm({ notify, toggle }) {
                       <FormControl>
                         <Switch
                           className={""}
-                          checked={toggle.marketing}
+                          checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
@@ -127,7 +130,7 @@ export default function NotificationsForm({ notify, toggle }) {
                       <FormControl>
                         <Switch
                           className={""}
-                          checked={toggle.security}
+                          checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
@@ -148,7 +151,7 @@ export default function NotificationsForm({ notify, toggle }) {
                       <FormControl>
                         <Switch
                           className={""}
-                          checked={toggle.social}
+                          checked={field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>

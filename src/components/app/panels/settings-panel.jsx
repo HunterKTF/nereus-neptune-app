@@ -47,7 +47,7 @@ export default function SettingsPanel({ props }) {
       </div>
       <div className={"flex flex-col p-5"}>
         {active === "profile" && <ProfileForm u_name={props.name} u_email={props.email} />}
-        {active === "account" && <AccountForm u_username={props.username} u_id={props.sub} />}
+        {active === "account" && <AccountForm u_username={props.username} u_language={props.language} u_id={props.sub} />}
         {active === "notifications" && <NotificationsForm notify={props.notify} toggle={props.toggle} />}
       </div>
     </div>

@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function ClientSelector({data}) {
+export default function ClientSelector({ data }) {
   return (
     <Select>
       <SelectTrigger className={"w-[280px]"}>
@@ -21,7 +21,7 @@ export default function ClientSelector({data}) {
           <SelectLabel>Clients</SelectLabel>
           {
             data.map((name) => {
-              return <SelectItem key={name.id_number} value={name.company}>{name.company}</SelectItem>
+              return <SelectItem key={name.id_number} value={name.company} >{name.company}</SelectItem>
             })
           }
         </SelectGroup>

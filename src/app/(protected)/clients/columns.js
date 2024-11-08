@@ -38,7 +38,7 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "id_number",
+    accessorKey: "client_id",
     header: ({ column }) => {
       return (
         <Button
@@ -123,13 +123,15 @@ export const columns = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(client.id_number)}
+              onClick={() => navigator.clipboard.writeText(client.client_id)}
             >
-              Copy payment ID
+              Copy client ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>
+              View client
+            </DropdownMenuItem>
+            <DropdownMenuItem className={"text-red-600"} >Delete client</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

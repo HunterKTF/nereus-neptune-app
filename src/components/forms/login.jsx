@@ -77,7 +77,7 @@ export default function LoginForm() {
               Submit <ChevronRight size={18} />
             </Button>
             {formState?.message && (
-              <p>formState.message</p>
+              <p>{formState.message}</p>
             )}
           </form>
         </Form>

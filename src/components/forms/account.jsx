@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { updateAccount, deleteAccount } from "@/actions/auth/actions";
+import { updateProfile, deleteAccount } from "@/actions/auth/actions";
 import { useFormState } from "react-dom";
 
 import { Separator } from "@/components/ui/separator";
@@ -39,18 +39,21 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const formSchema = z.object({
-  name: z.string().optional(),
+  username: z.string().optional(),
   language: z.string().optional(),
 });
 
-export default function AccountForm({ u_username, u_id }) {
+export default function AccountForm({ u_username, u_language, u_id }) {
   const initialState = {};
-  const [formState, formAction] = useFormState(updateAccount, initialState);
+  const [formState, formAction] = useFormState(updateProfile, initialState);
   const [formStateDelete, formActionDelete] = useFormState(deleteAccount, initialState);
   
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      language: u_language,
+    }
   });
 
   return (
