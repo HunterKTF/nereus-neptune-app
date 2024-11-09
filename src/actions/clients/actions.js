@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server';
+import axios from "axios";
 
 
 /* Create a client from button */
@@ -94,26 +95,42 @@ export async function deleteClient(formData) {
 }
 
 /* Upload client data file */
-export async function uploadData(currentState, formData) {
-  console.log(formData.select);
-  return { message: "Successfully uploaded file", status: 200 };
+export async function uploadData(values) {
+  const response = await axios.post('http://localhost:3001/upload',
+    values,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }
+    }
+  )
+  
+  console.log(response.data);
+  
+  return { success: "Successfully uploaded file", error: "" };
 }
 
 /*
-import { NextResponse } from 'next/server'
+    try {
+        const some_secret_code = await AsyncStorage.getItem('some_secret_code');
 
-export async function POST() {
-  const res = await fetch('https://data.mongodb-api.com/...', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'API-Key': process.env.DATA_API_KEY,
-    },
-    body: JSON.stringify({ time: new Date().toISOString() }),
-  })
- 
-  const data = await res.json()
- 
-  return NextResponse.json(data)
-}
+        const formData = new FormData();
+
+        formData.append('name', data.name);
+        formData.append('description', data.description);
+        formData.append('image', data.image);
+
+        const response = await axios.post('http://localhost:3000/api/path/to/your/route.js',
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "some_secret_code": some_secret_code,
+                }
+            }
+        )
+        return response
+    } catch (error) {
+        console.log(error)
+    }
 */
