@@ -2,9 +2,6 @@
 
 import { useState } from 'react';
 
-// TODO: DUMMY DATA HERE
-// import { data } from "@/lib/dummyData";
-
 import { Button } from "@/components/ui/button";
 import {columns} from "@/app/(protected)/clients/columns";
 import DataTable from "@/components/app/clients-table";
@@ -57,7 +54,7 @@ export default function ClientsPanel({ data }) {
           )}
         </div>
         <div className={"flex w-fit gap-2 py-2"}>
-          {active === "table" ? <AddClient /> : <ClientSelector data={data} />}
+          <AddClient />
         </div>
       </div>
       <div className="w-full pt-5 ">

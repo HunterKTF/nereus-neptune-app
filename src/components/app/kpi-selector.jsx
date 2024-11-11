@@ -21,7 +21,7 @@ export default function KpiSelector({data}) {
           <SelectLabel>KPIs</SelectLabel>
           {
             data.map((name) => {
-              return <SelectItem key={name.id} value={name.name}>{name.name}</SelectItem>
+              return <SelectItem key={name._id} value={name.name}>{name.name}</SelectItem>
             })
           }
         </SelectGroup>

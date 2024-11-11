@@ -105,32 +105,8 @@ export async function uploadData(values) {
     }
   )
   
-  console.log(response.data);
+  // Print the number of documents posted in console
+  // console.log(response.data);
   
   return { success: "Successfully uploaded file", error: "" };
 }
-
-/*
-    try {
-        const some_secret_code = await AsyncStorage.getItem('some_secret_code');
-
-        const formData = new FormData();
-
-        formData.append('name', data.name);
-        formData.append('description', data.description);
-        formData.append('image', data.image);
-
-        const response = await axios.post('http://localhost:3000/api/path/to/your/route.js',
-            formData,
-            {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    "some_secret_code": some_secret_code,
-                }
-            }
-        )
-        return response
-    } catch (error) {
-        console.log(error)
-    }
-*/

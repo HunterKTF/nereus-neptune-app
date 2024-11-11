@@ -6,16 +6,12 @@ import OverviewChart from "@/components/analytics/chart";
 
 import { dummyKPIs } from "@/lib/dummyKPIs";
 
-export default function Overview () {
+export default function Overview ({ metrics }) {
   return (
     <div className={"h-full flex flex-col items-center"}>
       <div className={"flex w-full"}>
         <div className="w-full grid grid-cols-4 gap-4">
-          {
-            dummyKPIs.map((data) => {
-              return <Cards key={data.id} data={data} />
-            })
-          }
+          <Cards data={metrics} />
         </div>
       </div>
       <div className={"h-full w-full mt-4"}>
