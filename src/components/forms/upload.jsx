@@ -1,13 +1,14 @@
 'use client'
 
 import {useState, startTransition} from 'react';
+import {useFormStatus} from "react-dom";
 import {uploadData} from "@/actions/clients/actions";
 
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 
-import { toast } from "@/hooks/use-toast"
+import { toast } from "sonner";
 import {Separator} from "@/components/ui/separator";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
@@ -52,14 +53,10 @@ export default function UploadForm({tableData}) {
     setSuccess("");
     
     const data = JSON.parse(JSON.stringify(values));
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+    toast("File uploaded", {
+      description: `File ${values.contpaqi.name} was uploaded for client with id: ${values.clientId}`,
     })
+    
     let formData = new FormData();
     formData.append('clientId', values.clientId);
     formData.append('file', values.contpaqi);
@@ -68,6 +65,10 @@ export default function UploadForm({tableData}) {
       uploadData(formData).then((result) => {
         setError(result.error);
         setSuccess(result.success);
+        
+        toast(result.success, {
+          description: result.error,
+        })
       });
     });
   };
@@ -168,9 +169,8 @@ export default function UploadForm({tableData}) {
                 </FormItem>
               )}
             />
-            <Button type={"submit"}
-                    className={"flex gap-1"}>
-              Add file
+            <Button type="submit">
+              Submit
             </Button>
           </form>
         </Form>

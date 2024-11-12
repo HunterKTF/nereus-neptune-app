@@ -96,17 +96,22 @@ export async function deleteClient(formData) {
 
 /* Upload client data file */
 export async function uploadData(values) {
-  const response = await axios.post('http://localhost:3001/upload',
-    values,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
+  try {
+    const response = await axios.post('http://localhost:3001/upload',
+      values,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
       }
-    }
-  )
-  
-  // Print the number of documents posted in console
-  // console.log(response.data);
-  
-  return { success: "Successfully uploaded file", error: "" };
+    )
+    
+    // Print the number of documents posted in console
+    // console.log(response.data);
+    
+    return { success: "Successfully uploaded file", error: "" };
+  } catch (e) {
+    console.log(e.message)
+    return { success: "Error uploading file", error: "No connection found" };
+  }
 }

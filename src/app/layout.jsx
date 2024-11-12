@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata = {
   title: "Nereus AI Neptune App",
