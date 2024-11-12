@@ -7,6 +7,8 @@ import { z } from "zod";
 import { updateProfile } from "@/actions/auth/actions";
 import { useFormState } from "react-dom";
 
+import { toast } from "@/hooks/use-toast"
+
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -34,6 +36,15 @@ export default function ProfileForm({ u_name, u_email }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
   });
+  
+  function onSubmit(data) {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <p>Hello World</p>
+      ),
+    })
+  }
   
   return (
     <div className={"w-full flex flex-col items-center justify-center gap-6"}>
@@ -94,7 +105,7 @@ export default function ProfileForm({ u_name, u_email }) {
                 </FormItem>
               )}
             />
-            <Button type={"submit"}
+            <Button onClick={onSubmit} type={"submit"}
                     className={"flex gap-1"}>
               Update profile
             </Button>

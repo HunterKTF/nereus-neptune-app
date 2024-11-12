@@ -4,8 +4,6 @@ import Cards from "@/components/analytics/cards";
 import MetricsTable from "@/components/analytics/metrics";
 import OverviewChart from "@/components/analytics/chart";
 
-import { dummyKPIs } from "@/lib/dummyKPIs";
-
 export default function Overview ({ metrics }) {
   return (
     <div className={"h-full flex flex-col items-center"}>
