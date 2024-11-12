@@ -1,6 +1,5 @@
 'use client'
 
-import KpiSelector from "@/components/app/kpi-selector";
 import { useState } from "react";
 
 import {

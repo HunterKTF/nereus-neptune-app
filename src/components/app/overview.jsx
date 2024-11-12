@@ -12,15 +12,18 @@ export default function Overview ({ metrics }) {
       <div className={"flex w-full"}>
         <div className="w-full grid grid-cols-4 gap-4">
           <Cards data={metrics} />
+          <Cards data={metrics} />
+          <Cards data={metrics} />
+          <Cards data={metrics} />
         </div>
       </div>
       <div className={"h-full w-full mt-4"}>
         <div className="w-full grid grid-cols-7 gap-4">
           <div className="col-span-4 border border-black rounded-xl">
-            <OverviewChart />
+            <OverviewChart data={metrics} />
           </div>
           <div className="col-span-3 border border-black rounded-xl">
-            <MetricsTable/>
+            <MetricsTable tableData={metrics} />
           </div>
         </div>
       </div>
