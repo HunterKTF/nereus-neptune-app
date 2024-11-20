@@ -8,7 +8,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {
@@ -19,8 +19,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
-import {ChevronRight} from "lucide-react";
 
 const formSchema = z.object({
   name: z.string(),
@@ -95,7 +93,7 @@ export default function RegisterForm() {
   // Define success and error states
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const { toast } = useToast()
+  const { toast } = useToast();
   
   // Submit form function handler
   const onSubmit = (values) => {

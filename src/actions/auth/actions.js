@@ -7,22 +7,21 @@ import { createAdminClient } from "@/utils/supabase/admin";
 
 
 /* Login form action to log user into app or return error message */
-export async function login(currentState, formData) {
+export async function login(formData) {
   // Create supabase client
   const supabase = await createClient();
   
   // Parse data from LoginForm
   const data = {
-    email: formData.email,
-    password: formData.password,
+    email: formData.get('email'),
+    password: formData.get('password'),
   }
   
   // Send auth login request
   const { error } = await supabase.auth.signInWithPassword(data);
   
   if (error) {
-    console.log(error.message);
-    return { message: error.message, status: 400 };
+    return { title: "Error while logging in", message: error.message, status: 400 };
   }
   else {
     redirect('/settings');
