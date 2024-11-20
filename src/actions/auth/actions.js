@@ -31,18 +31,18 @@ export async function login(currentState, formData) {
 
 
 /* Register function for new users */
-export async function register(currentState, formData) {
+export async function register(formData) {
   // Create supabase client
   const supabase = await createClient();
   
   // Parse data from RegisterForm
   const data = {
-    email: formData.email,
-    password: formData.password,
+    email: formData.get('email'),
+    password: formData.get('password'),
     options: {
       data: {
-        name: formData.name ?? "",
-        username: formData.name ?? "",
+        name: formData.get('name') ?? "",
+        username: formData.get('name') ?? "",
         notify: "all",
         toggle: {
           marketing: false,
@@ -56,9 +56,12 @@ export async function register(currentState, formData) {
   const { error } = await supabase.auth.signUp(data);
   
   if (error) {
-    return { message: error.message, status: 400 };
+    return { title: "Error setting up you account", message: error.message, status: 400 };
   } else {
-    return { message: "Successfully registered user", status: 200 };
+    return {  title: "Success!",
+      message: "Successfully registered user. You can now close this page and check your email",
+      status: 200
+    };
   }
 }
 
