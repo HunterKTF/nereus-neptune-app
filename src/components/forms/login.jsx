@@ -79,15 +79,10 @@ function FormStructure({action}) {
 }
 
 export default function LoginForm() {
-  // Define success and error states
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const { toast } = useToast();
   
   // Submit form function handler
   const onSubmit = (values) => {
-    setTitle("");
-    setDescription("");
     
     const data = JSON.parse(JSON.stringify(values));
     let formData = new FormData();
@@ -97,8 +92,6 @@ export default function LoginForm() {
     
     startTransition(() => {
       login(formData).then((result) => {
-        setTitle(result.title);
-        setDescription(result.message);
         
         if (result.status === 400) {
           toast({

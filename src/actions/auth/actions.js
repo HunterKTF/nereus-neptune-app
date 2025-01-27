@@ -66,7 +66,7 @@ export async function register(formData) {
 
 
 /* Update user information */
-export async function updateProfile(currentState, formData) {
+export async function updateProfile(formData) {
   const supabase = await createClient();
   
   const update_data = { data: {} };
@@ -90,9 +90,9 @@ export async function updateProfile(currentState, formData) {
   const { error } = await supabase.auth.updateUser(update_data);
   
   if (error) {
-    return { message: error.message, status: 400 };
+    return { title: "Error updating your profile", message: error.message, status: 400 };
   } else {
-    return { message: "Successfully updated user", status: 200 };
+    return { title: "Success!", message: "Successfully updated user", status: 200 };
   }
 }
 

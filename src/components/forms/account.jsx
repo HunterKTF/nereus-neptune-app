@@ -1,12 +1,15 @@
 'use client'
 
+import {useState, startTransition} from 'react';
+import {useFormStatus} from "react-dom";
+import { useFormState } from "react-dom";
+import { updateProfile, deleteAccount } from "@/actions/auth/actions";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { updateProfile, deleteAccount } from "@/actions/auth/actions";
-import { useFormState } from "react-dom";
-
+import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -43,10 +46,99 @@ const formSchema = z.object({
   language: z.string().optional(),
 });
 
+function Submit() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? "Submitting..." : "Submit"}
+    </Button>
+  );
+}
+
+function FormStructure({action, u_username}) {
+  // Define my form
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+  });
+  
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(action)} className={"space-y-3"}>
+        <FormField
+          control={form.control}
+          name="username"
+          render={({field}) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder={u_username} {...field} />
+              </FormControl>
+              <FormDescription>
+                This is the name that will be displayed on your profile and in emails.
+              </FormDescription>
+              <FormMessage/>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="language"
+          render={({field}) => (
+            <FormItem>
+              <FormLabel>Language</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className={"w-64"}>
+                    <SelectValue className={"text-neutral-500"} placeholder="Select language"/>
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="english">English</SelectItem>
+                  <SelectItem value="spanish">Spanish</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                This feature is work-in-progress.
+              </FormDescription>
+              <FormMessage/>
+            </FormItem>
+          )}
+        />
+        <Submit />
+      </form>
+    </Form>
+  )
+}
+
 export default function AccountForm({ u_username, u_language, u_id }) {
   const initialState = {};
-  const [formState, formAction] = useFormState(updateProfile, initialState);
   const [formStateDelete, formActionDelete] = useFormState(deleteAccount, initialState);
+  
+  const { toast } = useToast();
+  
+  // Submit form function handler
+  const onSubmit = (values) => {
+    
+    const data = JSON.parse(JSON.stringify(values));
+    let formData = new FormData();
+    formData.append('username', values.username);
+    formData.append('language', values.language);
+    
+    startTransition(() => {
+      updateProfile(formData).then((result) => {
+        
+        if (result.status === 400) {
+          toast({
+            variant: "destructive",
+            title: result.title,
+            description: result.message,
+          })
+        } else {
+          alert(result.message);
+        }
+      })
+    })
+  }
   
   // Define my form
   const form = useForm({
@@ -64,54 +156,7 @@ export default function AccountForm({ u_username, u_language, u_id }) {
       </div>
       <Separator className={"w-[550px]"}/>
       <div className={"w-[550px] flex flex-col gap-5"}>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(formAction)} className={"space-y-3"}>
-            <FormField
-              control={form.control}
-              name="username"
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder={u_username} {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is the name that will be displayed on your profile and in emails.
-                  </FormDescription>
-                  <FormMessage/>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="language"
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>Language</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger className={"w-64"}>
-                        <SelectValue className={"text-neutral-500"} placeholder="Select language"/>
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="english">English</SelectItem>
-                      <SelectItem value="spanish">Spanish</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    This feature is work-in-progress.
-                  </FormDescription>
-                  <FormMessage/>
-                </FormItem>
-              )}
-            />
-            <Button type={"submit"}
-                    className={"flex gap-1"}>
-              Update profile
-            </Button>
-          </form>
-        </Form>
+        <FormStructure action={onSubmit} u_username={u_username} />
       </div>
       <Separator className={"w-[550px]"}/>
       <div className={"w-[550px]"}>

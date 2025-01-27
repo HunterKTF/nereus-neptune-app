@@ -43,6 +43,7 @@ export default function DashboardPanel({data}) {
   // Define success and error states
   const [error, setError] = useState([]);
   const [metrics, setMetrics] = useState([]);
+  const [kpis, setKpis] = useState([]);
   
   // Define my form
   const form = useForm({
@@ -59,8 +60,9 @@ export default function DashboardPanel({data}) {
     
     startTransition(() => {
       downloadData(formData).then((result) => {
-        setError(result.data.error);
-        setMetrics(result.data.data);
+        setError(result.error);
+        setMetrics(result.data[0].metrics);
+        setKpis(result.data[1].kpis);
       });
     });
   };
@@ -157,7 +159,7 @@ export default function DashboardPanel({data}) {
         </div>
       </div>
       <div className={"pt-4"}>
-        {active === "overview" && <Overview metrics={metrics} />}
+        {active === "overview" && <Overview metrics={metrics} kpis={kpis} />}
         {active === "analytics" && <Analytics/>}
         {active === "reports" && <Reports/>}
         {active === "insights" && <Insights />}

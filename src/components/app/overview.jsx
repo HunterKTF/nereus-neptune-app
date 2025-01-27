@@ -4,7 +4,7 @@ import Cards from "@/components/analytics/cards";
 import MetricsTable from "@/components/analytics/metrics";
 import OverviewChart from "@/components/analytics/chart";
 
-export default function Overview ({ metrics }) {
+export default function Overview ({ metrics, kpis }) {
   return (
     <div className={"h-full flex flex-col items-center"}>
       <div className={"flex w-full"}>
@@ -18,7 +18,7 @@ export default function Overview ({ metrics }) {
       <div className={"h-full w-full mt-4"}>
         <div className="w-full grid grid-cols-7 gap-4">
           <div className="col-span-4 border border-black rounded-xl">
-            <OverviewChart data={metrics} />
+            <OverviewChart data={kpis} />
           </div>
           <div className="col-span-3 border border-black rounded-xl">
             <MetricsTable tableData={metrics} />

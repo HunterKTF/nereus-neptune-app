@@ -108,8 +108,6 @@ export default function RegisterForm() {
     
     startTransition(() => {
       register(formData).then((result) => {
-        setTitle(result.title);
-        setDescription(result.message);
         
         if (result.status === 400) {
           toast({
