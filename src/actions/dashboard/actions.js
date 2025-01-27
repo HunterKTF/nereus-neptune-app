@@ -3,9 +3,12 @@
 // import { createClient } from '@/utils/supabase/server';
 import axios from "axios";
 
+const uri = process.env.SERVER_URL;
+
 /* Download client data from query */
 export async function downloadData(values) {
-  const response = await axios.post('http://localhost:3001/download',
+  let url = uri + '/download';
+  const response = await axios.post(url,
     values,
     {
       headers: {

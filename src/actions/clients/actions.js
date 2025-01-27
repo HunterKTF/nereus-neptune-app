@@ -3,6 +3,8 @@
 import { createClient } from '@/utils/supabase/server';
 import axios from "axios";
 
+const uri = process.env.SERVER_URL;
+
 
 /* Create a client from button */
 export async function addClient(currentState, formData) {
@@ -97,7 +99,8 @@ export async function deleteClient(formData) {
 /* Upload client data file */
 export async function uploadData(values) {
   try {
-    const response = await axios.post('http://localhost:3001/upload',
+    let url = uri + '/upload';
+    const response = await axios.post(url,
       values,
       {
         headers: {
