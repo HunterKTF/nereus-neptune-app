@@ -14,8 +14,8 @@ import {
 
 export default function Cards({data}) {
   const [selected, setSelected] = useState("");
-  const [value, setValue] = useState("Value");
-  const [description, setDescription] = useState("Description");
+  const [value, setValue] = useState("No Data");
+  const [description, setDescription] = useState("No data is selected");
   
   // Transform data into an indexable dictionary
   let dict = {};
@@ -34,7 +34,7 @@ export default function Cards({data}) {
       <div className={"flex justify-between items-center"}>
         <Select onValueChange={valueChange}>
           <SelectTrigger className={"w-full"}>
-            <SelectValue placeholder={"Select a KPI"} />
+            <SelectValue placeholder={"Select a Metric"} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>

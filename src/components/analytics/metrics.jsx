@@ -41,7 +41,7 @@ export default function MetricsTable({tableData}) {
         <h3 className={"text-lg"}>Metricas Anuales</h3>
         <Select onValueChange={valueChange}>
           <SelectTrigger className={"w-full"}>
-            <SelectValue placeholder={"Select a KPI"} />
+            <SelectValue placeholder={"Select a Metric"} />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>

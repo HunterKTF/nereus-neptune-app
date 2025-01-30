@@ -14,7 +14,7 @@ export default function KpiSelector({data}) {
   return (
     <Select>
       <SelectTrigger className={"w-full"}>
-        <SelectValue placeholder={"Select a KPI"} />
+        <SelectValue placeholder={"Select a Variable"} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>

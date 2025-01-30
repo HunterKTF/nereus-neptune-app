@@ -1,12 +1,14 @@
 'use client'
 
 import { useState, startTransition } from 'react';
+import { useFormStatus } from 'react-dom';
 import { downloadData } from "@/actions/dashboard/actions";
 
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {z} from "zod";
 
+import { useToast } from "@/hooks/use-toast";
 import {Button} from "@/components/ui/button";
 import {
   Form,
@@ -36,33 +38,88 @@ const formSchema = z.object({
   clientId: z.string(),
 });
 
+function Submit() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type={"submit"} disabled={pending}>
+      {pending ? "Submitting..." : "Submit"}
+    </Button>
+  )
+}
+
+function FormStructure({action, data}) {
+  // Define my form
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+  });
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(action)} className={"w-fit flex justify-around items-center gap-3"}>
+        {/*<DateRangePicker />*/}
+        <FormField
+          control={form.control}
+          name="clientId"
+          render={({field}) => (
+            <FormItem className={"w-[240px]"}>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className={"w-[240px]"}>
+                    <SelectValue placeholder={"Select a client"} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Clients</SelectLabel>
+                    {
+                      data.map((name) => {
+                        return <SelectItem key={name.id_number} value={name.client_id} >{name.company}</SelectItem>
+                      })
+                    }
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <FormMessage/>
+            </FormItem>
+          )}
+        />
+        <Button type={"submit"}
+                className={"flex"}>
+          Generate
+        </Button>
+      </form>
+    </Form>
+  )
+}
+
 export default function DashboardPanel({data}) {
   // Define active state for menu
   const [active, setActive] = useState("overview");
   
   // Define success and error states
-  const [error, setError] = useState([]);
   const [metrics, setMetrics] = useState([]);
   const [kpis, setKpis] = useState([]);
-  
-  // Define my form
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-  });
-  
+
+  const { toast } = useToast();
+
   const onSubmit = (values) => {
-    setError([]);
-    setMetrics([]);
-    
-    const data = JSON.parse(JSON.stringify(values));
+
     let formData = new FormData();
     formData.append('clientId', values.clientId);
-    
+
     startTransition(() => {
       downloadData(formData).then((result) => {
-        setError(result.error);
-        setMetrics(result.data[0].metrics);
-        setKpis(result.data[1].kpis);
+        if (result.data !== []) {
+          toast({
+            variant: "success",
+            title: result.message
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: result.message,
+          });
+        }
       });
     });
   };
@@ -121,41 +178,7 @@ export default function DashboardPanel({data}) {
         </div>
         <div className={"flex gap-3"}>
           {/*<DashboardRange tableData={data} />*/}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className={"w-fit flex justify-around items-center gap-3"}>
-              <DateRangePicker />
-              <FormField
-                control={form.control}
-                name="clientId"
-                render={({field}) => (
-                  <FormItem className={"w-[240px]"}>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className={"w-[240px]"}>
-                          <SelectValue placeholder={"Select a client"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Clients</SelectLabel>
-                          {
-                            data.map((name) => {
-                              return <SelectItem key={name.id_number} value={name.client_id} >{name.company}</SelectItem>
-                            })
-                          }
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage/>
-                  </FormItem>
-                )}
-              />
-              <Button type={"submit"}
-                      className={"flex"}>
-                Generate
-              </Button>
-            </form>
-          </Form>
+          <FormStructure action={onSubmit} data={data} />
         </div>
       </div>
       <div className={"pt-4"}>
