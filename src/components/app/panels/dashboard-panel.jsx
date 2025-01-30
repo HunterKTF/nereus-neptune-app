@@ -110,6 +110,8 @@ export default function DashboardPanel({data}) {
     startTransition(() => {
       downloadData(formData).then((result) => {
         if (result.data !== []) {
+          setMetrics(result.data[0]['metrics'])
+          setKpis(result.data[1]['kpis'])
           toast({
             variant: "success",
             title: result.message

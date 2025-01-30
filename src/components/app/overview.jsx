@@ -5,6 +5,8 @@ import MetricsTable from "@/components/analytics/metrics";
 import OverviewChart from "@/components/analytics/chart";
 
 export default function Overview ({ metrics, kpis }) {
+  console.log(metrics);
+  console.log(kpis);
   return (
     <div className={"h-full flex flex-col items-center"}>
       <div className={"flex w-full"}>

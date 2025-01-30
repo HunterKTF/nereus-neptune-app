@@ -17,5 +17,7 @@ export async function downloadData(values) {
     }
   )
   
+  console.log(response.data['data']);
+  
   return { message: response.data['message'], data: response.data['data'], error: response.data['error'] };
 }
