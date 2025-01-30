@@ -1,5 +1,9 @@
 'use client'
 
+import { deleteClient } from '@/actions/clients/actions'
+
+import {startTransition} from 'react';
+
 import { MoreHorizontal } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 
@@ -12,7 +16,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
 export const columns = [
   {
@@ -127,11 +131,30 @@ export const columns = [
             >
               Copy client ID
             </DropdownMenuItem>
+            
             <DropdownMenuSeparator />
+            
             <DropdownMenuItem>
               View client
             </DropdownMenuItem>
-            <DropdownMenuItem className={"text-red-600"} >Delete client</DropdownMenuItem>
+            
+            <DropdownMenuItem className={"text-red-600"}
+                              onClick={() => {
+                                let formData = {'clientId': client.client_id}
+                                
+                                startTransition(() => {
+                                  deleteClient(formData).then((result) => {
+                                    if (result.status === 204) {
+                                      alert("Client deleted successfully")
+                                      window.location.reload();
+                                    } else {
+                                      alert("Error deleting client")
+                                    }
+                                  })
+                                })
+                              }}>
+              Delete client
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

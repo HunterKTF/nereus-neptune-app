@@ -7,16 +7,14 @@ const uri = process.env.SERVER_URL;
 
 
 /* Create a client from button */
-export async function addClient(currentState, formData) {
+export async function addClient(formData) {
   const supabase = await createClient();
   
   const client_data = {
-    client: formData.client,
-    company: formData.company,
-    email: formData.email,
+    client: formData.get('client'),
+    company: formData.get('company'),
+    email: formData.get('email'),
   }
-  
-  console.log(client_data)
   
   const { error } = await supabase.from('clients').insert(client_data);
   
@@ -24,8 +22,7 @@ export async function addClient(currentState, formData) {
     console.log(error)
     return { message: error.message, status: 400 };
   } else {
-    console.log('client added')
-    return { message: "Successfully added client", status: 200 };
+    return { message: "Successfully added client!", status: 200 };
   }
 }
 
@@ -92,7 +89,7 @@ export async function deleteClient(formData) {
   if (response.status === 204) {
     return { message: "Successfully deleted client", status: 204 };
   } else {
-    return response;
+    return { message: response, status: 400 };
   }
 }
 
@@ -112,9 +109,9 @@ export async function uploadData(values) {
     // Print the number of documents posted in console
     // console.log(response.data);
     
-    return { success: "Successfully uploaded file", error: "" };
+    return { message: "Successfully uploaded file", desc: "", status: 200 };
   } catch (e) {
     console.log(e.message)
-    return { success: "Error uploading file", error: "No connection found" };
+    return { message: "Error uploading file", desc: "No connection found", status: 400 };
   }
 }

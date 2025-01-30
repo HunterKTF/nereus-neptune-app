@@ -1,6 +1,6 @@
 'use client'
 
-import {useState, startTransition} from 'react';
+import {startTransition} from 'react';
 import {useFormStatus} from "react-dom";
 import { useFormState } from "react-dom";
 import { updateProfile, deleteAccount } from "@/actions/auth/actions";
@@ -55,10 +55,13 @@ function Submit() {
   );
 }
 
-function FormStructure({action, u_username}) {
+function FormStructure({action, u_username, u_language}) {
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      language: u_language,
+    }
   });
   
   return (
@@ -118,8 +121,6 @@ export default function AccountForm({ u_username, u_language, u_id }) {
   
   // Submit form function handler
   const onSubmit = (values) => {
-    
-    const data = JSON.parse(JSON.stringify(values));
     let formData = new FormData();
     formData.append('username', values.username);
     formData.append('language', values.language);
@@ -143,9 +144,6 @@ export default function AccountForm({ u_username, u_language, u_id }) {
   // Define my form
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      language: u_language,
-    }
   });
 
   return (
@@ -156,7 +154,7 @@ export default function AccountForm({ u_username, u_language, u_id }) {
       </div>
       <Separator className={"w-[550px]"}/>
       <div className={"w-[550px] flex flex-col gap-5"}>
-        <FormStructure action={onSubmit} u_username={u_username} />
+        <FormStructure action={onSubmit} u_username={u_username} u_language={u_language} />
       </div>
       <Separator className={"w-[550px]"}/>
       <div className={"w-[550px]"}>

@@ -1,6 +1,6 @@
 "use client"
 
-import {useState, startTransition} from 'react';
+import {startTransition} from 'react';
 import {useFormStatus} from "react-dom";
 import { login } from "@/actions/auth/actions";
 
@@ -84,7 +84,6 @@ export default function LoginForm() {
   // Submit form function handler
   const onSubmit = (values) => {
     
-    const data = JSON.parse(JSON.stringify(values));
     let formData = new FormData();
     formData.append('name', values.name);
     formData.append('email', values.email);
@@ -92,15 +91,14 @@ export default function LoginForm() {
     
     startTransition(() => {
       login(formData).then((result) => {
-        
-        if (result.status === 400) {
+        if (result) {
           toast({
             variant: "destructive",
             title: result.title,
             description: result.message,
           })
         } else {
-          alert(result.message);
+          alert("Welcome back!");
         }
       })
     })
