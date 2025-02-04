@@ -95,8 +95,20 @@ export async function deleteClient(formData) {
 
 /* Upload client data file */
 export async function uploadData(values) {
+  let file = values.get('file');
+
+  let url = "";
   try {
-    let url = uri + '/upload';
+    if (!file.name) {
+      url = uri + '/upload/estados-financieros';
+
+    } else {
+      url = uri + '/upload';
+
+    }
+
+    console.log(url);
+
     const response = await axios.post(url,
       values,
       {
@@ -104,10 +116,7 @@ export async function uploadData(values) {
           "Content-Type": "multipart/form-data",
         }
       }
-    )
-    
-    // Print the number of documents posted in console
-    // console.log(response.data);
+    );
     
     return { message: "Successfully uploaded file", desc: "", status: 200 };
   } catch (e) {

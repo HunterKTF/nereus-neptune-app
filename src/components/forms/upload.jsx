@@ -33,9 +33,10 @@ import {
 
 const formSchema = z.object({
   clientId: z.string(),
-  contpaqi: z.any().refine((file) => file?.length !== 0, "File is required"),
-  aspel: z.any().refine((file) => file?.length !== 0, "File is required").optional(),
-  other: z.any().refine((file) => file?.length !== 0, "File is required").optional(),
+  year: z.string().refine((year) => year.length === 4, "Year must be 4 digits"),
+  contpaqi: z.any().refine((file) => file?.length !== 0, "File is required").optional(),
+  balance: z.any().refine((file) => file?.length !== 0, "File is required").optional(),
+  estado: z.any().refine((file) => file?.length !== 0, "File is required").optional(),
 });
 
 function Submit() {
@@ -88,6 +89,20 @@ function FormStructure({action, tableData}) {
         />
         <FormField
           control={form.control}
+          name="year"
+          render={({field}) => (
+            <FormItem>
+              <FormLabel>Year</FormLabel>
+              <FormControl>
+                <Input type={"text"} {...field} />
+              </FormControl>
+              <FormDescription>Enter the year of the attached file</FormDescription>
+              <FormMessage/>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="contpaqi"
           render={({field: {value, onChange, ...fieldProps}}) => (
             <FormItem>
@@ -112,15 +127,22 @@ function FormStructure({action, tableData}) {
         />
         <FormField
           control={form.control}
-          name="aspel"
-          render={({field}) => (
+          name="balance"
+          render={({field: {value, onChange, ...fieldProps}}) => (
             <FormItem>
-              <FormLabel>Aspel</FormLabel>
+              <FormLabel>Balance General</FormLabel>
               <FormControl>
-                <Input type={"file"} {...field} />
+                <Input {...fieldProps}
+                  placeholder="Contpaqi Excel File"
+                  type={"file"}
+                  accept=".xls,.xlsx"
+                  onChange={(event) =>
+                    onChange(event.target.files && event.target.files[0])
+                  } 
+                />
               </FormControl>
               <FormDescription>
-                Upload your auxiliary movements file in the format of XLSX.
+                Sube tu Balance General en formato XLSX.
               </FormDescription>
               <FormMessage/>
             </FormItem>
@@ -128,15 +150,22 @@ function FormStructure({action, tableData}) {
         />
         <FormField
           control={form.control}
-          name="other"
-          render={({field}) => (
+          name="estado"
+          render={({field: {value, onChange, ...fieldProps}}) => (
             <FormItem>
-              <FormLabel>Other</FormLabel>
+              <FormLabel>Estado de Resultados</FormLabel>
               <FormControl>
-                <Input type={"file"} {...field} />
+                <Input {...fieldProps}
+                  placeholder="Contpaqi Excel File"
+                  type={"file"}
+                  accept=".xls,.xlsx"
+                  onChange={(event) =>
+                    onChange(event.target.files && event.target.files[0])
+                  } 
+                />
               </FormControl>
               <FormDescription>
-                Upload your auxiliary movements file in the format of XLSX.
+                Sube tu Estado de Resultados en formato XLSX.
               </FormDescription>
               <FormMessage/>
             </FormItem>
@@ -157,6 +186,9 @@ export default function UploadForm({tableData}) {
     let formData = new FormData();
     formData.append('clientId', values.clientId);
     formData.append('file', values.contpaqi);
+    formData.append('year', values.year);
+    formData.append('balance', values.balance);
+    formData.append('estado', values.estado);
     
     startTransition(() => {
       uploadData(formData).then((result) => {
